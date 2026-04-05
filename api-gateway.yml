@@ -1,56 +1,63 @@
-jwt:
-  secret: "a74138c70e93061c2d3d93f941e6295b88fcc694ab2d525d1c001948f6d4ee2a"
-
 server:
-  port: 8080
+  port: 8080  # gateway port
 
 spring:
   application:
-    name: api-gateway
+    name: api-gateway  # service name
 
   config:
-    import: "optional:configserver:http://localhost:8888"
+    import: "optional:configserver:http://localhost:8888"  # config server
 
   cloud:
     gateway:
-
       routes:
+
         - id: auth-service
           uri: lb://auth-service
           predicates:
-            - Path=/api/auth/**
+            - Path=/api/auth/**  # auth routes (no security)
 
         - id: zone-service
           uri: lb://zone-service
           predicates:
             - Path=/api/zones/**
           filters:
-            - AuthenticationFilter
-            - Authentication
+            - name: Authentication  # JWT filter
 
         - id: sensor-service
           uri: lb://sensor-service
           predicates:
             - Path=/api/sensors/**
           filters:
-            - AuthenticationFilter
-            - Authentication
+            - name: Authentication
 
         - id: crop-service
           uri: lb://crop-inventory-service
           predicates:
             - Path=/api/crops/**
           filters:
-            - AuthenticationFilter
-            - Authentication
+            - name: Authentication
 
 eureka:
   client:
     service-url:
-      defaultZone: http://localhost:8761/eureka/
+      defaultZone: http://localhost:8761/eureka/  # eureka server
+    register-with-eureka: true
+    fetch-registry: true
+
+  instance:
+    prefer-ip-address: true
+
+jwt:
+  secret: "a74138c70e93061c2d3d93f941e6295b88fcc694ab2d525d1c001948f6d4ee2a"
 
 management:
+  endpoint:
+    gateway:
+      enabled: true
+      access: read-only
+
   endpoints:
     web:
       exposure:
-        include: health, info, gateway
+        include: health, info, gateway  # actuator endpoints
