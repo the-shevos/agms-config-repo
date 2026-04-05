@@ -8,7 +8,7 @@ spring:
   datasource:
     url: jdbc:mysql://localhost:3306/agms_automation_db?createDatabaseIfNotExist=true
     username: root
-    password: 1234
+    password: mysql
     driver-class-name: com.mysql.cj.jdbc.Driver
 
   jpa:
