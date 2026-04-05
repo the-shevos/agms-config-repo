@@ -1,44 +1,23 @@
+server:
+  port: 8082  # service port
+
 spring:
   application:
     name: sensor-service  # service name
 
-  config:
-    import: "optional:configserver:http://localhost:8888"  # config server
-
   jackson:
     serialization:
-      write-dates-as-timestamps: false  # use readable date format
-
-eureka:
-  client:
-    service-url:
-      defaultZone: http://localhost:8761/eureka/  # eureka server
-    register-with-eureka: true  # register service
-    fetch-registry: true  # get services
-
-  instance:
-    prefer-ip-address: true  # use IP
+      write-dates-as-timestamps: false  # readable dates
 
 external:
   iot:
     base-url: http://104.211.95.241:8080/api  # IoT API
-    username: sachindu  # API username
+    username: root  # API username
     password: 1234  # API password
 
-auth:
-  service:
-    base-url: http://localhost:8085/api/auth  # auth service URL
-    username: sachindu
-    password: 1234
-
-zone:
-  service:
-    base-url: http://localhost:8081  # zone service URL
-
 telemetry:
-  fetch-interval: 10000  # data fetch time (ms)
+  fetch-interval: 10000  # fetch interval (ms)
 
 logging:
   level:
-    com.agms.sensor_telemetry_service: DEBUG  # app logs
-    org.springframework.cloud.loadbalancer: DEBUG  # LB logs
+    com.agms.sensor_telemetry_service: DEBUG  # debug logs
