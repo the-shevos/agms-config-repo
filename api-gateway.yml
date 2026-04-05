@@ -1,0 +1,56 @@
+jwt:
+  secret: "a74138c70e93061c2d3d93f941e6295b88fcc694ab2d525d1c001948f6d4ee2a"
+
+server:
+  port: 8080
+
+spring:
+  application:
+    name: api-gateway
+
+  config:
+    import: "optional:configserver:http://localhost:8888"
+
+  cloud:
+    gateway:
+
+      routes:
+        - id: auth-service
+          uri: lb://auth-service
+          predicates:
+            - Path=/api/auth/**
+
+        - id: zone-service
+          uri: lb://zone-service
+          predicates:
+            - Path=/api/zones/**
+          filters:
+            - AuthenticationFilter
+            - Authentication
+
+        - id: sensor-service
+          uri: lb://sensor-service
+          predicates:
+            - Path=/api/sensors/**
+          filters:
+            - AuthenticationFilter
+            - Authentication
+
+        - id: crop-service
+          uri: lb://crop-inventory-service
+          predicates:
+            - Path=/api/crops/**
+          filters:
+            - AuthenticationFilter
+            - Authentication
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health, info, gateway
