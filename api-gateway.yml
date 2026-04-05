@@ -11,18 +11,17 @@ spring:
   cloud:
     gateway:
       routes:
-
         - id: auth-service
-          uri: lb://auth-service
+          uri: lb://auth-service  # auth service
           predicates:
-            - Path=/api/auth/**  # auth routes (no security)
+            - Path=/api/auth/**  # public endpoints
 
         - id: zone-service
           uri: lb://zone-service
           predicates:
             - Path=/api/zones/**
           filters:
-            - name: Authentication  # JWT filter
+            - name: Authentication  # JWT check
 
         - id: sensor-service
           uri: lb://sensor-service
@@ -42,22 +41,22 @@ eureka:
   client:
     service-url:
       defaultZone: http://localhost:8761/eureka/  # eureka server
-    register-with-eureka: true
-    fetch-registry: true
+    register-with-eureka: true  # register service
+    fetch-registry: true  # get other services
 
   instance:
-    prefer-ip-address: true
+    prefer-ip-address: true  # use IP
 
 jwt:
-  secret: "a74138c70e93061c2d3d93f941e6295b88fcc694ab2d525d1c001948f6d4ee2a"
+  secret: "a74138c70e93061c2d3d93f941e6295b88fcc694ab2d525d1c001948f6d4ee2a"  # JWT key
 
 management:
   endpoint:
     gateway:
-      enabled: true
-      access: read-only
+      enabled: true  # enable gateway endpoint
+      access: read-only  # read only access
 
   endpoints:
     web:
       exposure:
-        include: health, info, gateway  # actuator endpoints
+        include: health, info, gateway  # exposed endpoints
