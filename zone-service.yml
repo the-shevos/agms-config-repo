@@ -1,36 +1,25 @@
+server:
+  port: 8081  # service port
+
 spring:
   application:
-    name: zone-service
-
-  config:
-    import: "optional:configserver:http://localhost:8888"
+    name: zone-service  # service name
 
   datasource:
-    url: jdbc:mysql://localhost:3306/agms_zone_db?createDatabaseIfNotExist=true
-    username: root
-    password: mysql
-    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/agms_zone_db?createDatabaseIfNotExist=true  # DB URL
+    username: root  # DB username
+    password: mysql  # DB password
 
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: update  # auto update tables
+    show-sql: true  # show SQL logs
 
 eureka:
   client:
     service-url:
-      defaultZone: http://localhost:8761/eureka/
-    register-with-eureka: true
-    fetch-registry: true
-
-  instance:
-    prefer-ip-address: true
+      defaultZone: http://localhost:8761/eureka/  # eureka server
 
 external:
   iot:
-    base-url: http://104.211.95.241:8080/api
-    username: sachindu
-    password: 1234
-
-auth:
-  service:
-    base-url: http://localhost:8085/api
+    base-url: http://104.211.95.241:8080/api  # IoT API
