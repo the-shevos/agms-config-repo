@@ -1,31 +1,31 @@
 spring:
   application:
-    name: automation-service
+    name: automation-service  # service name
 
   config:
-    import: "optional:configserver:http://localhost:8888"
+    import: "optional:configserver:http://localhost:8888"  # config server
 
   datasource:
-    url: jdbc:mysql://localhost:3306/agms_automation_db?createDatabaseIfNotExist=true
-    username: root
-    password: mysql
+    url: jdbc:mysql://localhost:3306/agms_automation_db?createDatabaseIfNotExist=true  # DB URL
+    username: root  # DB username
+    password: mysql  # DB password
     driver-class-name: com.mysql.cj.jdbc.Driver
 
   jpa:
     hibernate:
-      ddl-auto: update
-    show-sql: true
+      ddl-auto: update  # auto update tables
+    show-sql: true  # show SQL logs
 
 automation:
   thresholds:
-    temperature: 30.0
-    humidity: 40.0
+    temperature: 30.0  # temp limit
+    humidity: 40.0  # humidity limit
 
 logging:
   level:
-    com.agms.automation_service: DEBUG
+    com.agms.automation_service: DEBUG  # debug logs
 
 eureka:
   client:
     service-url:
-      defaultZone: http://localhost:8761/eureka/
+      defaultZone: http://localhost:8761/eureka/  # eureka server
