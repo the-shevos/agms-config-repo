@@ -2,19 +2,16 @@ server:
   port: 8084  # service port
 
 spring:
-  application:
-    name: crop-inventory-service  # service name
-
   datasource:
     url: jdbc:mysql://localhost:3306/agms_crop_db?createDatabaseIfNotExist=true  # DB URL
     username: root  # DB username
     password: mysql  # DB password
-    driver-class-name: com.mysql.cj.jdbc.Driver
+    driver-class-name: com.mysql.cj.jdbc.Driver  # MySQL driver
 
   jpa:
     hibernate:
       ddl-auto: update  # auto update tables
-    show-sql: true  # show SQL logs
+    show-sql: true  # show SQL queries
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQLDialect  # MySQL dialect
@@ -23,8 +20,3 @@ eureka:
   client:
     service-url:
       defaultZone: http://localhost:8761/eureka/  # eureka server
-    fetch-registry: true  # get services
-    register-with-eureka: true  # register service
-
-  instance:
-    prefer-ip-address: true  # use IP
