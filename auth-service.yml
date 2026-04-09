@@ -2,7 +2,7 @@ spring:
   datasource:
     url: jdbc:mysql://localhost:3306/agms_user_db?createDatabaseIfNotExist=true  # database URL
     username: mysql  # DB username
-    password: 1234  # DB password
+    password: mysql  # DB password
 
   jpa:
     hibernate:
